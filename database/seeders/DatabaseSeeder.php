@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             ['email' => 'admin@mail.com'],
             [
                 'name' => 'Admin',
-                'password' => Hash::make('admin123'), // atau bcrypt('password')
-                // 'role' => 'Admin', // jika ada kolom 'role'
+                'password' => Hash::make('admin123'),
+                'role' => 'Admin',
             ]
         );
     }
