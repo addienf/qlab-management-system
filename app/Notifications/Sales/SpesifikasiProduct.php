@@ -43,15 +43,17 @@ class SpesifikasiProduct extends Notification
             ->line('Terima kasih telah menggunakan aplikasi kami!')
             ->salutation('Salam Hormat, PT Kinarya Sentosa');
     }
-  
+
+    /**
      * Get the array representation of the notification.
      *
      * @return array<string, mixed>
      */
-       
+
     public function toArray(object $notifiable): array
     {
         return [
             //
         ];
     }
+}
