@@ -42,26 +42,16 @@ class SpesifikasiProduct extends Notification
             ->action('Lihat Data Produk', ListSpesifikasiProducts::getUrl())
             ->line('Terima kasih telah menggunakan aplikasi kami!')
             ->salutation('Salam Hormat, PT Kinarya Sentosa');
-
     }
-
-    // public function toDatabase(object $notifiable): MailMessage
-    // {
-    //     return (new MailMessage)
-    //         ->subject('Data Spesifikasi Product Saved successfully')
-    //         ->line('The introduction to the notification.')
-    //         ->action('Notification Action', ListSpesifikasiProducts::getUrl())
-    //         ->line('Thank you for using our application!');
-    // }
-    /**
+  
      * Get the array representation of the notification.
      *
      * @return array<string, mixed>
      */
+       
     public function toArray(object $notifiable): array
     {
         return [
             //
         ];
     }
-}
