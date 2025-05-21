@@ -21,8 +21,9 @@ return new class extends Migration
             $table->string('no_urs');
             $table->text('detail_spesification');
             $table->string('delivery_address');
-            $table->string('pic');
-            $table->boolean('is_stock');
+            $table->string('pic_name');
+            $table->string('pic_sign');
+            $table->date('date');
             $table->timestamps();
         });
     }
