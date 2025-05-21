@@ -15,20 +15,20 @@
         <!-- Header Table -->
         <div class="grid grid-cols-5 gap-px border border-black mb-6 text-center text-sm">
             <div class="border border-black row-span-2 flex items-center justify-center p-2">
-                <img src="logo.png" alt="Logo" class="w-12 h-12 object-contain">
+                <img src="asset/logo.png" alt="Logo" class="w-20 h-20 object-contain">
             </div>
             <div class="border border-black col-span-1 row-span-2 flex items-center justify-center">
                 Surat Perintah Kerja
             </div>
-            <div class="border border-black col-span-1 p-2">
+            <div class="border border-black col-span-1 row-span-2 p-2">
                 <div>No Dokumen:</div>
                 <div class="font-semibold">XXXX</div>
             </div>
-            <div class="border border-black col-span-1 p-2">
+            <div class="border border-black col-span-1 row-span-2 p-2">
                 <div>Tanggal Rilis:</div>
                 <div class="font-semibold">8 Mei 2025</div>
             </div>
-            <div class="border border-black col-span-1 p-2">
+            <div class="border border-black col-span-1 row-span-2 p-2">
                 <div>Revisi:</div>
                 <div class="font-semibold">0</div>
             </div>

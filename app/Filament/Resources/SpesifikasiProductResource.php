@@ -49,47 +49,86 @@ class SpesifikasiProductResource extends Resource
         return $form
             ->schema([
                 Section::make('Contact Information')
+                    ->extraAttributes(['class' => 'border-2 border-blue-300 rounded-md dark:border-blue-50'])
                     ->collapsible()
                     ->schema([
-                        TextInput::make('no_urs')->label('No URS')->required(),
-                        TextInput::make('name')->label('Customer Name')->required(),
-                        TextInput::make('department')->label('Department')->required(),
-                        TextInput::make('phone_number')->label('Phone Number')->numeric()->required(),
-                        TextInput::make('company_name')->label('Company Name')->required(),
-                        TextInput::make('company_address')->label('Company Address')->required(),
+                        TextInput::make('no_urs')->label('No URS')->required()->columnSpan(1),
+                        TextInput::make('name')->label('Customer Name')->required()->columnSpan(1),
+                        TextInput::make('department')->label('Department')->required()->columnSpan(1),
+                        TextInput::make('phone_number')->label('Phone Number')->numeric()->required()->columnSpan(1),
+                        TextInput::make('company_name')->label('Company Name')->required()->columnSpan(2),
+                        TextInput::make('company_address')->label('Company Address')->required()->columnSpanFull(),
                     ])->columns(3),
+
                 Section::make('Product Request')
+                    ->extraAttributes(['class' => 'border-2 border-blue-300 rounded-md dark:border-blue-50'])
                     ->collapsible()
                     ->schema([
                         Repeater::make('productRequestItem')
                             ->label('Pilih Product')
                             ->relationship()
                             ->schema([
-                                Select::make('product_id')->label('Product')->required()
-                                    ->relationship('product', 'product_name'),
-                                TextInput::make('quantity')->numeric()->default(1)->required(),
-                                Repeater::make('specification')->label('Pilih Spesifikasi')
+                                Grid::make(2)
                                     ->schema([
-                                        Select::make('name')->reactive()->required()
+                                        Select::make('product_id')
+                                            ->label('Product')
+                                            ->required()
+                                            ->relationship('product', 'product_name')
+                                            ->columnSpan(1),
+
+                                        TextInput::make('quantity')
+                                            ->numeric()
+                                            ->default(1)
+                                            ->required()
+                                            ->columnSpan(1),
+                                    ]),
+
+                                Repeater::make('specification')
+                                    ->label('Pilih Spesifikasi')
+                                    ->schema([
+                                        Select::make('name')
+                                            ->reactive()
+                                            ->required()
                                             ->label('Jenis Spesifiaksi')
-                                            ->options(config('spec_config.spesifikasi')),
-                                        Radio::make('value')->label('Nilai')->boolean()->inline()->required()
+                                            ->options(config('spec_config.spesifikasi'))
+                                            ->columnSpan(1),
+
+                                        Radio::make('value')
+                                            ->label('Nilai')
+                                            ->boolean()
+                                            ->inline()
+                                            ->required()
                                             ->inlineLabel(false)
-                                            ->visible(fn($get) => in_array($get('name'), ['water_feeding_system', 'software'])),
-                                        TextInput::make('value')->label('Nilai')->required()
-                                            ->visible(fn($get) => !in_array($get('name'), ['water_feeding_system', 'software'])),
-                                    ])->columns(2)->defaultItems(1)->columnSpanFull()
+                                            ->visible(fn($get) => in_array($get('name'), ['water_feeding_system', 'software']))
+                                            ->columnSpan(1),
+
+                                        TextInput::make('value')
+                                            ->label('Nilai')
+                                            ->required()
+                                            ->visible(fn($get) => !in_array($get('name'), ['water_feeding_system', 'software']))
+                                            ->columnSpan(1),
+                                    ])
+                                    ->columns(2)
+                                    ->defaultItems(1)
+                                    ->columnSpanFull()
                                     ->addActionLabel('Add Specification'),
-                            ])->columns(2)->addActionLabel('Add Product')
+                            ])
+                            ->columns(1)
+                            ->addActionLabel('Add Product'),
                     ]),
-                Section::make('Delivery & PIC Information')->collapsible()
+
+
+                Section::make('Delivery & PIC Information')
+                    ->extraAttributes(['class' => 'border-2 border-blue-300 rounded-md dark:border-blue-50'])
+                    ->collapsible()
                     ->schema([
                         RichEditor::make('detail_spesification')->label('Detail Spesification')->required()->columnSpanFull(),
-                        TextInput::make('delivery_address')->label('Delivery Address')->required(),
-                        TextInput::make('pic_name')->label('PIC Name')->required(),
-                        DatePicker::make('date')->label('Tanggal')->required(),
-                        static::getSignature()
+                        TextInput::make('delivery_address')->label('Delivery Address')->required()->columnSpanFull(),
+                        TextInput::make('pic_name')->label('PIC Name')->required()->columnSpan(1),
+                        DatePicker::make('date')->label('Tanggal')->required()->columnSpan(1),
+                        static::getSignature()->columnSpanFull(),
                     ])
+                    ->columns(2),
             ]);
     }
 
@@ -97,9 +136,16 @@ class SpesifikasiProductResource extends Resource
     {
         return $table
             ->columns([
-                //
-                TextColumn::make('no_urs'),
-                TextColumn::make('name'),
+                TextColumn::make('no_urs')
+                    ->label('No URS')
+                    ->searchable()
+                    ->sortable(),
+
+                TextColumn::make('name')
+                    ->label('Nama')
+                    ->searchable()
+                    ->sortable(),
+
                 ImageColumn::make('pic_sign')
                     ->label('Tanda Tangan')
                     ->height(80)
@@ -107,14 +153,14 @@ class SpesifikasiProductResource extends Resource
                     ->getStateUsing(fn($record) => asset('storage/' . $record->pic_sign)),
             ])
             ->filters([
-                //
+                // Tambahkan filter di sini jika perlu
             ])
             ->actions([
                 ActionGroup::make([
-                    Tables\Actions\ViewAction::make(),
-                    Tables\Actions\EditAction::make()->slideOver(),
+                    Tables\Actions\ViewAction::make()->color('primary'),
+                    Tables\Actions\EditAction::make()->slideOver()->color('warning'),
                     Tables\Actions\DeleteAction::make(),
-                ])
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -144,7 +190,8 @@ class SpesifikasiProductResource extends Resource
         return SignaturePad::make('pic_sign')
             ->label('Tanda Tangan')
             ->afterStateUpdated(function ($state, callable $set, $get, $livewire) {
-                if (!$state) return;
+                if (!$state)
+                    return;
                 // $oldPath = $get('pic_sign');
                 $oldPath = $livewire->record?->pic_sign ?? null;
                 $record = $livewire->record ?? new SpesifikasiProduct();
