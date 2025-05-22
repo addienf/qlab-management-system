@@ -25,7 +25,6 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->spa()
-            ->sidebarFullyCollapsibleOnDesktop()
             ->brandLogo(asset('asset/logo.png'))
             ->brandLogoHeight(height: '180px')
             ->default()

@@ -18,17 +18,17 @@
                 <img src="asset/logo.png" alt="Logo" class="w-20 h-20 object-contain">
             </div>
             <div class="border border-black col-span-1 row-span-2 flex items-center justify-center">
-                Surat Perintah Kerja
+            Permintaan Spesifikasi Produk
             </div>
-            <div class="border border-black col-span-1 row-span-2 p-2">
+            <div class="border border-black col-span-1 row-span-2 p-2 pt-6">
                 <div>No Dokumen:</div>
                 <div class="font-semibold">XXXX</div>
             </div>
-            <div class="border border-black col-span-1 row-span-2 p-2">
+            <div class="border border-black col-span-1 row-span-2 p-2 pt-6">
                 <div>Tanggal Rilis:</div>
                 <div class="font-semibold">8 Mei 2025</div>
             </div>
-            <div class="border border-black col-span-1 row-span-2 p-2">
+            <div class="border border-black col-span-1 row-span-2 p-2 pt-6">
                 <div>Revisi:</div>
                 <div class="font-semibold">0</div>
             </div>
@@ -117,4 +117,5 @@
         Print
     </button>
 </div>
+
 </html>

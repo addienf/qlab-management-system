@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Saade\FilamentAutograph\Forms\Components\SignaturePad;
+use Filament\Tables\Actions\Action;
 
 class SpesifikasiProductResource extends Resource
 {
@@ -136,6 +137,7 @@ class SpesifikasiProductResource extends Resource
     {
         return $table
             ->columns([
+
                 TextColumn::make('no_urs')
                     ->label('No URS')
                     ->searchable()
@@ -160,6 +162,9 @@ class SpesifikasiProductResource extends Resource
                     Tables\Actions\ViewAction::make()->color('primary'),
                     Tables\Actions\EditAction::make()->slideOver()->color('warning'),
                     Tables\Actions\DeleteAction::make(),
+                    Action::make('Lihat PDF')
+                        ->openUrlInNewTab(),
+
                 ]),
             ])
             ->bulkActions([
@@ -183,6 +188,7 @@ class SpesifikasiProductResource extends Resource
             'create' => Pages\CreateSpesifikasiProduct::route('/create'),
             'view' => Pages\ViewSpesifikasiProduct::route('/{record}'),
             'edit' => Pages\EditSpesifikasiProduct::route('/{record}/edit'),
+            'pdf' => Pages\pdfViewSpesifikasiProduk::route('/pdf'),
         ];
     }
     public static function getSignature(): SignaturePad
